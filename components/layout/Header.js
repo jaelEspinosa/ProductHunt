@@ -15,6 +15,7 @@ const ContenedorHeader = styled.div`
   margin: 0 auto;
   padding: 2rem;
   position: relative;
+  gap: 3rem;
   
   @media (min-width: 768px) {
     display: flex;
