@@ -15,7 +15,6 @@ export const Formulario = styled.form `
 
 export const Campo = styled.div`
 margin-bottom: 2rem;
-padding: 1rem;
 display: flex;
 align-items: center;
 
