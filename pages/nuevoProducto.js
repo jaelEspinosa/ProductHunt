@@ -218,7 +218,7 @@ const NuevoProducto = () => {
 
               <textarea
                 id="descripcion"
-                placeholder="Nombre descripcion"
+                placeholder="Descripcion"
                 name="descripcion"
                 value={descripcion}
                 onChange={handleChange}
