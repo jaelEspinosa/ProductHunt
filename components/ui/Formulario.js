@@ -28,8 +28,9 @@ align-items: center;
     padding: 1rem;
  }
  textarea{
-   width: 340px;
+   resize: none;
    height: 300px;
+   
  }
 `;
 

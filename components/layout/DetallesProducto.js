@@ -18,9 +18,15 @@ const Producto = styled.li`
 
 const DescripcionProducto = styled.div`
   flex: 0 1 600px;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  column-gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+  @media(min-width: 768px){
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    column-gap: 2rem;
+  }
+  
 `;
 const Comentarios = styled.div`
   margin-top: 2rem;
