@@ -15,6 +15,7 @@ export const Formulario = styled.form `
 
 export const Campo = styled.div`
 margin-bottom: 2rem;
+padding: 1rem;
 display: flex;
 align-items: center;
 
@@ -28,6 +29,7 @@ align-items: center;
     padding: 1rem;
  }
  textarea{
+   width: 340px;
    height: 300px;
  }
 `;
