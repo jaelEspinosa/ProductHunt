@@ -4,7 +4,7 @@ import Layout from '../components/layout/Layout';
 import {collection, getDocs} from 'firebase/firestore'
 import { FirebaseContext } from '../firebase';
 import DetallesProducto from '../components/layout/DetallesProducto';
-import Spinner from '../components/layout/spinner';
+import Spinner from '../components/layout/Spinner';
 
 
 export default function Home() {

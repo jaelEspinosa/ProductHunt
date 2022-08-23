@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { FirebaseContext } from '../../firebase';
 import Error404 from '../../components/layout/404';
-import Spinner from '../../components/layout/spinner';
+import Spinner from '../../components/layout/Spinner';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
