@@ -52,17 +52,55 @@ const Header = () => {
           <Buscar />
 
           <Navegacion />
-          {!mostrarMenu && <MenuHamb onClick={() => setMostrarMenu(true)} />}
+           <MenuHamb onClick={() => setMostrarMenu(true)} />
           {mostrarMenu && (
-            <div css ={css`
+            <div 
+                 onClick={()=>setMostrarMenu(false)}
+                 css ={css`
+                 width: 30rem;
+                 border:1px solid gray;
+                 background-color: white;
+                 padding: 2rem;
+                 border-radius: 10px;
+                 position:absolute;
+                 right:-1rem;
+                 top:1.6rem;
                  margin: 2rem;
                  display: flex;
                  flex-direction: column;
+                 font-size: 2rem;
+                 text-transform: uppercase;
+                 animation-name: menuMostrar;
+                 animation-duration: 1s;
+                 animation-timing-function: ease-in-out;
+                 a{
+                  margin-bottom: 2rem;
+                 }
+                 div{
+                  margin-bottom: 2rem;
+                  border: 1px solid gray;
+                  width: 100%;
+                  height: 1px;
+                 }
+                 @keyframes menuMostrar {
+                  0%{
+                    top:-28rem
+                  }
+                  100%{
+                    top:1.6rem
+                  }
+                 }
+
             `}>
               <Link href="/">Inicio</Link>
+              <div></div>
               <Link href="/populares">Populares</Link>
+              <div></div>
               {usuario?.displayName && (
+                <>
                 <Link href="/nuevoProducto">Nuevo Producto</Link>
+                <div></div>
+                </>
               )}
             </div>
           )}
