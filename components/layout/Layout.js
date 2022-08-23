@@ -21,6 +21,7 @@ const Layout = (props) => {
         html {
           font-size: 62.5%;
           box-sizing: border-box;
+          
         }
         *, *:before, *:after{
           box-sizing: inherit;
@@ -70,6 +71,8 @@ const Layout = (props) => {
       
       <main css ={css`
            width: 100vw;
+           min-width: 580px;
+          
       `}>
            {props.children}
       </main>

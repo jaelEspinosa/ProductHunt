@@ -8,9 +8,13 @@ import Boton from "../ui/Boton";
 
 import { FirebaseContext } from "../../firebase";
 const ContenedorHeader = styled.div`
+  display: flex;
   max-width: 1200px;
+  min-width: 580px;
   width: 95%;
   margin: 0 auto;
+  padding: 2rem;
+  position: relative;
   
   @media (min-width: 768px) {
     display: flex;
@@ -52,18 +56,19 @@ const Header = () => {
           <Buscar />
 
           <Navegacion />
-           <MenuHamb onClick={() => setMostrarMenu(true)} />
+           <MenuHamb onClick={() => setMostrarMenu(!mostrarMenu
+           )} />
           {mostrarMenu && (
             <div 
-                 onClick={()=>setMostrarMenu(false)}
+                 onClick={()=>setMostrarMenu(!mostrarMenu)}
                  css ={css`
-                 width: 30rem;
+                 width: 35rem;
                  border:1px solid gray;
                  background-color: white;
                  padding: 2rem;
                  border-radius: 10px;
                  position:absolute;
-                 right:-1rem;
+                 right:0%;
                  top:1.6rem;
                  margin: 2rem;
                  display: flex;
@@ -73,6 +78,18 @@ const Header = () => {
                  animation-name: menuMostrar;
                  animation-duration: 1s;
                  animation-timing-function: ease-in-out;
+                 @media (min-width: 620px){
+                    right: 10%;
+                  }
+                   @media (min-width: 720px){
+                    right: 20%;
+                  } 
+                  @media (min-width: 820px){
+                    right: 30%;
+                  } 
+                  @media (min-width: 920px){
+                    right: 40%;
+                  } 
                  a{
                   margin-bottom: 2rem;
                  }
