@@ -12,7 +12,7 @@ import { es } from "date-fns/locale";
 import Layout from "../../components/layout/Layout";
 import { Campo, Inputsubmit } from "../../components/ui/Formulario";
 import Boton from "../../components/ui/Boton";
-import { async } from "@firebase/util";
+
 
 
 // styled components
