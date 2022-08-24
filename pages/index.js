@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../components/layout/Layout';
 import {collection, getDocs} from 'firebase/firestore'
