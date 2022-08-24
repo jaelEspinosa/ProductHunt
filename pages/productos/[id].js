@@ -12,8 +12,53 @@ import { es } from "date-fns/locale";
 import Layout from "../../components/layout/Layout";
 import { Campo, Inputsubmit } from "../../components/ui/Formulario";
 import Boton from "../../components/ui/Boton";
+import { async } from "@firebase/util";
+
 
 // styled components
+const MenuComentarios = styled.div`
+width: 10rem;
+        height: 12rem;
+        width: 12rem;
+        border: 1px solid gray;
+        background-color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        position: absolute;
+        right: 0%;
+        top: 1rem;
+        margin: .2rem;
+        display: flex;
+        flex-direction: column;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        animation-name: menuMostrar;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+        color:gray;
+        p{
+          margin:.6rem
+         }
+         p:hover{
+          cursor: pointer;
+         }
+        @keyframes menuMostrar {
+          0% {
+            height: 0rem;
+            top: 0rem;
+            border: 1px solid transparent;
+            color:transparent;
+            background-color: transparent;
+          }
+          100% {
+            height: 12rem;
+            background-color: white;
+            border: 1px solid gray;
+            top: 1rem;
+            color:gray
+          }
+        }
+`;
 
 const ContenedorProducto = styled.div`
   @media (min-width: 768px) {
@@ -38,6 +83,8 @@ const Producto = () => {
   const [producto, setProducto] = useState({});
   const [error, setError] = useState(false);
   const [cargando, setCargando] = useState(false);
+  const [comentarioAgregado, setComentarioAgregado] = useState(false)
+  const [mostrarMenuComentario, setMostrarMenuComentario] = useState(false)
   const router = useRouter();
   2;
   const {
@@ -142,7 +189,34 @@ const Producto = () => {
       ...producto,
       comentarios: nuevosComentarios,
     });
+    setComentarioAgregado(true)
   };
+  // Funciones del menu de comentarios 
+  const eliminarComentario = async (dato)=>{
+    if (!usuario) {
+      return router.push("/login");
+    }
+  const nuevosComentarios = comentarios.filter(comentario => comentario.creado!==dato)
+    console.log('vamos a eliminar el comentario...')
+
+    // actualizo el state
+    setProducto({
+      ...producto,
+     comentarios: nuevosComentarios
+    })
+
+    // actualizo la DB
+    const docRef = doc(firebase.db, "productos", id);
+    await updateDoc(docRef, {
+      comentarios: nuevosComentarios,
+    });
+    
+  }
+
+  const editarComentario = async ()=>{
+    console.log('vamos a Editar el comentario...')
+  }
+ 
 
   return (
     <Layout>
@@ -180,7 +254,7 @@ const Producto = () => {
               <p>{descripcion}</p>
 
               {usuario && (
-                <>
+              !comentarioAgregado && <div>
                   <h2>Agrega tu comentario</h2>
                   <form onSubmit={agregarComentario}>
                     <Campo>
@@ -192,14 +266,14 @@ const Producto = () => {
                     </Campo>
                     <Inputsubmit type="submit" value="Agrega tu comentario" />
                   </form>
-                </>
+                </div>
               )}
               <h2
                 css={css`
                   margin: 2rem 0;
                 `}
               >
-                Comentarios
+                Comentarios:
               </h2>
               {!comentarios?.length ? (
                 <p>Aún no hay comentarios</p>
@@ -210,7 +284,8 @@ const Producto = () => {
                       margin-bottom: 15px;
                     }
                     li {
-                      background-color: lightgray;
+                      position:relative;
+                      border:1px solid lightgray;
                       margin: 2rem 0.2rem;
                       padding: 2rem;
                       
@@ -219,6 +294,37 @@ const Producto = () => {
                 >
                   {comentarios?.map((comentario, i) => (
                     <li key={`${comentario.usuarioId}-${i}`}>
+                    { usuario?.uid === comentario.usuarioId &&
+                    <div>
+                     <div
+                       onClick={()=>{
+                       
+                        setMostrarMenuComentario(true)}}
+                       css = {css`
+                        position: absolute;
+                        width: 25px;
+                        height: 25px;
+                        background-image: url('/static/img/menuPuntos.png');
+                        background-size: contain;
+                        top: 10px;
+                        right: 10px;
+                      `}>
+                      
+                      </div>
+                      {mostrarMenuComentario && 
+                        <MenuComentarios>
+                          <p onClick={()=>{
+                                           setMostrarMenuComentario(false)
+                                           editarComentario(comentario.creado)}}>👉 Editar</p>
+                          <p onClick={()=>{eliminarComentario(comentario.creado)
+                                           setMostrarMenuComentario(false)}}>🆑 Eliminar</p>
+                          <p onClick={()=>setMostrarMenuComentario(false)}>❌ Cancelar</p>
+                                                        
+                        </MenuComentarios>
+                      }
+                      </div>
+                      }
+                      
                       <ComentarioMensaje>
                         {comentario.mensaje}
                       </ComentarioMensaje>
