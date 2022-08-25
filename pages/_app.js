@@ -47,6 +47,9 @@ const MyApp = props =>{
       };
       
       const editarComentario = async (creado, mensaje, id, nuevoComentario) => {
+        if (!usuario) {
+          return router.push("/login");
+        }
         
         // mapeamos el array para aplicar cambios en un nuevo array
         const nuevosComentarios = comentarios.map(comentario => comentario.creado === creado ? {...comentario, mensaje :nuevoComentario} : comentario)
@@ -63,6 +66,13 @@ const MyApp = props =>{
         comentarios: nuevosComentarios,
        })
       };
+
+      const agregarComentario = async () => {
+        if (!usuario) {
+          return router.push("/login");
+        }
+        console.log('vamos a añadir el comentario...')
+      }
    
     const {Component, pageProps} = props;
   
@@ -78,7 +88,8 @@ const MyApp = props =>{
             cargando, 
             setCargando,            
             eliminarComentario,
-            editarComentario
+            editarComentario,
+            agregarComentario
             
         }}
  >

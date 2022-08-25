@@ -73,8 +73,7 @@ const Comentario = ({ comentario, id }) => {
   
   const [mostrarMenuComentario, setMostrarMenuComentario] = useState(false);
   const [mostrarModal, setMostrarModal] = useState(false);
-  const [mostrarModalEdComentarios, setMostrarModalEdComentarios] =
-    useState(false);
+  const [mostrarModalEdComentarios, setMostrarModalEdComentarios] = useState(false);
   const [nuevoComentario, setNuevoComentario] = useState(comentario.mensaje);
   const {
     firebase,

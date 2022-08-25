@@ -10,7 +10,7 @@ import styled from "@emotion/styled";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 import Layout from "../../components/layout/Layout";
-import { Campo, Inputsubmit } from "../../components/ui/Formulario";
+
 import Boton from "../../components/ui/Boton";
 import Comentario from "../../components/layout/Comentario";
 
@@ -30,7 +30,8 @@ const ContenedorProducto = styled.div`
 
 const Producto = () => {
 
-  const [comentarioAgregado, setComentarioAgregado] = useState(false) 
+  
+  const [mostrarModalComentario, setMostrarModalComentario] = useState(false)
   const { 
     firebase,
     usuario,
@@ -116,14 +117,14 @@ const Producto = () => {
   };
   // funciones para agregar comentarios
 
-  const comentarioChange = (e) => {
+  const handleChange = (e) => {
     setComentario({
       ...comentario,
       [e.target.name]: e.target.value,
     });
   };
   const agregarComentario = async (e) => {
-    e.preventDefault();
+    
     if (!usuario) {
       return router.push("/login");
     }
@@ -148,7 +149,7 @@ const Producto = () => {
       ...producto,
       comentarios: nuevosComentarios,
     });
-    setComentarioAgregado(true)
+    setComentario({})
   };
 
  
@@ -171,15 +172,96 @@ const Producto = () => {
           </h1>
           <ContenedorProducto>
             <div>
+            <div css = {css `
+             position:relative;
+             border: 1px solid var(--gris3);
+             padding: 15px;
+             margin-bottom: 25px;
+            `}>
+            {mostrarModalComentario && (
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 1px solid lightgray;
+            width: 450px;
+            height: 250px;
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 5px 5px 7px gray;
+            animation-name: mostrarModal;
+            animation-duration: 0.1s;
+            animation-timing-function: ease-in-out;
+
+            @keyframes mostrarModal {
+              0% {
+                width: 0;
+                height: 0;
+                background-color: transparent;
+                color: transparent;
+                box-shadow: 5px 5px 7px transparent;
+              }
+              100% {
+                width: 290px;
+                height: 150px;
+                background-color: white;
+                color: gray;
+                box-shadow: 5px 5px 7px lightgray;
+              }
+            }
+          `}
+        >
+          <h2>Añade Comentario</h2>
+          <textarea
+            css={css`
+              font-size: 2rem;
+              width: 350px;
+              height: 100px;
+            `}
+            value={comentario.mensaje}
+            onChange={handleChange}
+            name='mensaje'
+          ></textarea>
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+              button {
+                margin-top: 25px;
+                background-color: white;
+                font-size: 2rem;
+              }
+            `}
+          >
+            <button
+              onClick={() => {
+                setMostrarModalComentario(false);
+                agregarComentario()
+              }}
+            >
+              Crear Comentario
+            </button>
+            <button onClick={() => setMostrarModalComentario(false)}>
+              Cancelar
+            </button>
+          </div>
+        </div>
+                )} 
               {creado && (
                 <p css ={css`
                 font-size: 2.2rem;
                 `}>
-                  <strong>Publicado por: </strong> {creador?.nombre} hace{" "}
+                  <strong>Publicado por: </strong> {creador?.nombre}, hace{" "}
                   {formatDistanceToNow(new Date(creado), { locale: es })}
                 </p>
               )}
-              <p></p>
+              
 
               <img
                 css={css`
@@ -188,11 +270,28 @@ const Producto = () => {
                 src={URLImage}
                 alt={`imagen ${nombre}`}
               />
-              <p>{descripcion}</p>
-
+              <p
+               css={css`
+               font-size: 2.4rem;
+               color: var(--gris2);
+               `}
+              >{descripcion}</p>
+              </div>
               {usuario && (
-              !comentarioAgregado && <div>
-                  <h2>Agrega tu comentario</h2>
+              <div>
+                  <h3 css = {css`
+                  display: block;
+                  text-align: center;
+                  border-radius: 8px;
+                  background-color: var(--gris3);
+                      :hover{
+                       cursor: pointer;
+                       
+                      }
+                    `}
+                    onClick={()=>setMostrarModalComentario(true)}
+                    >-Pulsa para añadir tu comentario-</h3>
+          
                   {/* <form onSubmit={agregarComentario}>
                     <Campo>
                       <input
