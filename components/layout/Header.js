@@ -85,7 +85,7 @@ const Header = () => {
                  font-size: 2rem;
                  text-transform: uppercase;
                  animation-name: menuMostrar;
-                 animation-duration: 0.4s;
+                 animation-duration: 0.2s;
                  animation-timing-function: ease-in-out;
                  @media (min-width: 620px){
                     right: 10%;
@@ -110,9 +110,11 @@ const Header = () => {
                  }
                  @keyframes menuMostrar {
                   0%{
+                    height: 0;
                     top:-28rem
                   }
                   100%{
+                    height: inherit;
                     top:1.6rem
                   }
                  }
