@@ -12,7 +12,7 @@ const Boton = styled.a`
   text-align: center;
   background-color: ${props => props.bgColor ? '#DA552f' : 'white'};
   color: ${props => props.bgColor ? 'white' : '#000'};
-  font-size: 1rem;
+  font-size: 2rem;
   @media (min-width: 768px){
     font-size: 1.5rem;
   }

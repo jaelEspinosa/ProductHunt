@@ -10,9 +10,9 @@ import Boton from "../ui/Boton";
 
 //Styled componets
 const MenuComentarios = styled.div`
-  width: 10rem;
-  height: 12rem;
-  width: 12rem;
+  
+  height: 13.5rem;
+  width: 14.5rem;
   border: 1px solid gray;
   background-color: white;
   padding: 1rem;
@@ -23,7 +23,7 @@ const MenuComentarios = styled.div`
   margin: 0.2rem;
   display: flex;
   flex-direction: column;
-  font-size: 1.2rem;
+  font-size: 1.7rem;
   text-transform: uppercase;
   animation-name: menuMostrar;
   animation-duration: 0.5s;
@@ -52,57 +52,21 @@ const MenuComentarios = styled.div`
     }
   }
 `;
-const MenuEditarComentarios = styled.div`
-  width: 10rem;
-  height: 12rem;
-  width: 12rem;
-  border: 1px solid gray;
-  background-color: white;
-  padding: 1rem;
-  border-radius: 10px;
-  position: absolute;
-  right: 0%;
-  top: 1rem;
-  margin: 0.2rem;
-  display: flex;
-  flex-direction: column;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  animation-name: menuMostrar;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-in-out;
-  color: gray;
-  p {
-    margin: 0.6rem;
-  }
-  p:hover {
-    cursor: pointer;
-  }
-  @keyframes menuMostrar {
-    0% {
-      height: 0rem;
-      top: 0rem;
-      border: 1px solid transparent;
-      color: transparent;
-      background-color: transparent;
-    }
-    100% {
-      height: 12rem;
-      background-color: white;
-      border: 1px solid gray;
-      top: 1rem;
-      color: gray;
-    }
-  }
-`;
+
 const Span = styled.span`
   font-weight: bolder;
 `;
 const ComentarioMensaje = styled.p`
-  font-size: 22px;
+  font-size: 2.5rem;
+ @media(min-width: 768px){
+  font-size:1.8rem
+ }
 `;
 const DatosComentario = styled.p`
-  font-size: 16px;
+  font-size: 1.8rem;
+  @media(min-width: 768px){
+  font-size:1.6rem
+ }
 `;
 
 const Comentario = ({ comentario, id }) => {
@@ -238,9 +202,10 @@ const Comentario = ({ comentario, id }) => {
             }
           `}
         >
-          <p>Editar Comentario</p>
+          <h2>Editar Comentario</h2>
           <textarea
             css={css`
+              font-size: 2rem;
               width: 350px;
               height: 100px;
             `}
@@ -255,6 +220,7 @@ const Comentario = ({ comentario, id }) => {
               button {
                 margin-top: 25px;
                 background-color: white;
+                font-size: 2rem;
               }
             `}
           >
@@ -264,7 +230,7 @@ const Comentario = ({ comentario, id }) => {
                 editarComentario(comentario.creado, comentario.mensaje, id, nuevoComentario);
               }}
             >
-              Confirmar
+              Guardar Cambios
             </button>
             <button onClick={() => setMostrarModalEdComentarios(false)}>
               Cancelar
