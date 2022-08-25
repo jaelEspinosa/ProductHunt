@@ -12,53 +12,12 @@ import { es } from "date-fns/locale";
 import Layout from "../../components/layout/Layout";
 import { Campo, Inputsubmit } from "../../components/ui/Formulario";
 import Boton from "../../components/ui/Boton";
+import Comentario from "../../components/layout/Comentario";
 
 
 
 // styled components
-const MenuComentarios = styled.div`
-width: 10rem;
-        height: 12rem;
-        width: 12rem;
-        border: 1px solid gray;
-        background-color: white;
-        padding: 1rem;
-        border-radius: 10px;
-        position: absolute;
-        right: 0%;
-        top: 1rem;
-        margin: .2rem;
-        display: flex;
-        flex-direction: column;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        animation-name: menuMostrar;
-        animation-duration: 0.5s;
-        animation-timing-function: ease-in-out;
-        color:gray;
-        p{
-          margin:.6rem
-         }
-         p:hover{
-          cursor: pointer;
-         }
-        @keyframes menuMostrar {
-          0% {
-            height: 0rem;
-            top: 0rem;
-            border: 1px solid transparent;
-            color:transparent;
-            background-color: transparent;
-          }
-          100% {
-            height: 12rem;
-            background-color: white;
-            border: 1px solid gray;
-            top: 1rem;
-            color:gray
-          }
-        }
-`;
+
 
 const ContenedorProducto = styled.div`
   @media (min-width: 768px) {
@@ -67,26 +26,26 @@ const ContenedorProducto = styled.div`
     column-gap: 2rem;
   }
 `;
-const Span = styled.span`
-  font-weight: bolder;
-`;
-const ComentarioMensaje = styled.p`
-  font-size: 22px;
-  
-`;
-const DatosComentario = styled.p`
-  font-size: 16px;
-`;
+
 
 const Producto = () => {
-  const { usuario, firebase } = useContext(FirebaseContext);
-  const [producto, setProducto] = useState({});
-  const [error, setError] = useState(false);
-  const [cargando, setCargando] = useState(false);
-  const [comentarioAgregado, setComentarioAgregado] = useState(false)
-  const [mostrarMenuComentario, setMostrarMenuComentario] = useState(false)
+
+  const [comentarioAgregado, setComentarioAgregado] = useState(false) 
+  const { 
+    firebase,
+    usuario,
+    producto,
+    setProducto,
+    error,
+    setError,
+    cargando, 
+    setCargando,
+    
+    
+   } = useContext(FirebaseContext);
+
   const router = useRouter();
-  2;
+  
   const {
     nombre,
     descripcion,
@@ -191,31 +150,7 @@ const Producto = () => {
     });
     setComentarioAgregado(true)
   };
-  // Funciones del menu de comentarios 
-  const eliminarComentario = async (dato)=>{
-    if (!usuario) {
-      return router.push("/login");
-    }
-  const nuevosComentarios = comentarios.filter(comentario => comentario.creado!==dato)
-    console.log('vamos a eliminar el comentario...')
 
-    // actualizo el state
-    setProducto({
-      ...producto,
-     comentarios: nuevosComentarios
-    })
-
-    // actualizo la DB
-    const docRef = doc(firebase.db, "productos", id);
-    await updateDoc(docRef, {
-      comentarios: nuevosComentarios,
-    });
-    
-  }
-
-  const editarComentario = async ()=>{
-    console.log('vamos a Editar el comentario...')
-  }
  
 
   return (
@@ -293,82 +228,7 @@ const Producto = () => {
                   `}
                 >
                   {comentarios?.map((comentario, i) => (
-                    <li key={`${comentario.usuarioId}-${i}`}>
-                    { usuario?.uid === comentario.usuarioId &&
-                    <div>
-                     <div
-                       onClick={()=>{
-                       
-                        setMostrarMenuComentario(true)}}
-                       css = {css`
-                        position: absolute;
-                        width: 25px;
-                        height: 25px;
-                        background-image: url('/static/img/menuPuntos.png');
-                        background-size: contain;
-                        top: 10px;
-                        right: 10px;
-                      `}>
-                      
-                      </div>
-                      {mostrarMenuComentario && 
-                        <MenuComentarios>
-                          <p onClick={()=>{
-                                           setMostrarMenuComentario(false)
-                                           editarComentario(comentario.creado)}}>👉 Editar</p>
-                          <p onClick={()=>{eliminarComentario(comentario.creado)
-                                           setMostrarMenuComentario(false)}}>🆑 Eliminar</p>
-                          <p onClick={()=>setMostrarMenuComentario(false)}>❌ Cancelar</p>
-                                                        
-                        </MenuComentarios>
-                      }
-                      </div>
-                      }
-                      
-                      <ComentarioMensaje>
-                        {comentario.mensaje}
-                      </ComentarioMensaje>
-                      <div
-                        css={css`
-                          display: flex;
-                          align-items: flex-start;
-                          justify-content: space-between;
-                        `}
-                      >
-                        <div>
-                          <DatosComentario>
-                            Escrito por:
-                            <Span> {comentario.usuarioNombre}</Span>
-                          </DatosComentario>
-
-                          {comentario.usuarioId === creador.id ? (
-                            <div
-                              css={css`
-                                margin: 0.5rem 0.1rem;
-                                display: inline-block;
-                                background-color: green;
-                                font-size: 11px;
-                                padding: 0.1rem 0.5rem;
-                                border-radius: 5px;
-                                color: white;
-                                text-align: center;
-                                text-transform: uppercase;
-                              `}
-                            >
-                              Autor
-                            </div>
-                          ) : null}
-                        </div>
-                        <DatosComentario>
-                          Hace...{" "}
-                          <Span>
-                            {formatDistanceToNow(new Date(comentario.creado), {
-                              locale: es,
-                            })}
-                          </Span>
-                        </DatosComentario>
-                      </div>
-                    </li>
+                    <Comentario key = {comentario.usuarioId+i} comentario={comentario} id={id} />
                   ))}
                 </ul>
               )}

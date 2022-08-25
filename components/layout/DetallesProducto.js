@@ -107,7 +107,7 @@ const DetallesProducto = ({ producto }) => {
           <div>
             <Comentarios>
               <img src="/static/img/comentario.png" alt="logo" />
-              <p>{comentarios.length} Comentarios</p>
+              {comentarios.length === 1 ? <p>{comentarios.length} Comentario</p> : <p>{comentarios.length} comentarios</p>}
             </Comentarios>
           </div>
           <p>

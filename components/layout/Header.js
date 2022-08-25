@@ -41,6 +41,7 @@ const Header = () => {
       css={css`
         border-bottom: 2px solid var(--gris3);
         padding: 1rem 0;
+        
       `}
     >
       <ContenedorHeader>
