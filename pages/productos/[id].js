@@ -172,7 +172,9 @@ const Producto = () => {
           <ContenedorProducto>
             <div>
               {creado && (
-                <p>
+                <p css ={css`
+                font-size: 2.2rem;
+                `}>
                   <strong>Publicado por: </strong> {creador?.nombre} hace{" "}
                   {formatDistanceToNow(new Date(creado), { locale: es })}
                 </p>
@@ -191,7 +193,7 @@ const Producto = () => {
               {usuario && (
               !comentarioAgregado && <div>
                   <h2>Agrega tu comentario</h2>
-                  <form onSubmit={agregarComentario}>
+                  {/* <form onSubmit={agregarComentario}>
                     <Campo>
                       <input
                         onChange={comentarioChange}
@@ -200,7 +202,7 @@ const Producto = () => {
                       />
                     </Campo>
                     <Inputsubmit type="submit" value="Agrega tu comentario" />
-                  </form>
+                  </form> */}
                 </div>
               )}
               <h2

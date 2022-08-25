@@ -26,7 +26,7 @@ const MenuComentarios = styled.div`
   font-size: 1.7rem;
   text-transform: uppercase;
   animation-name: menuMostrar;
-  animation-duration: 0.5s;
+  animation-duration: 0.2s;
   animation-timing-function: ease-in-out;
   color: gray;
   p {

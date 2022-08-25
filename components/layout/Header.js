@@ -9,22 +9,26 @@ import Boton from "../ui/Boton";
 import { FirebaseContext } from "../../firebase";
 const ContenedorHeader = styled.div`
   display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid white;
+  background-color: var(--gris3);
   max-width: 1200px;
   min-width: 580px;
   width: 95%;
   margin: 0 auto;
   padding: 2rem;
   position: relative;
-  gap: 3rem;
+  gap: 1rem;
   
   @media (min-width: 768px) {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
   }
 `;
 const Logo = styled.p`
   color: var(--naranja);
-  font-size: 3rem;
+  font-size: 4rem;
   line-height: 0;
   font-weight: 700;
   font-family: "Roboto slab", serif;
@@ -39,16 +43,19 @@ const Header = () => {
   return (
     <header
       css={css`
-        border-bottom: 2px solid var(--gris3);
+        
         padding: 1rem 0;
+        width: 100vw;
         
       `}
     >
       <ContenedorHeader>
+      
         <div
           css={css`
             display: flex;
             align-items: center;
+            justify-content: space-between;
           `}
         >
           <Link href="/">
@@ -78,19 +85,19 @@ const Header = () => {
                  font-size: 2rem;
                  text-transform: uppercase;
                  animation-name: menuMostrar;
-                 animation-duration: 1s;
+                 animation-duration: 0.4s;
                  animation-timing-function: ease-in-out;
                  @media (min-width: 620px){
                     right: 10%;
                   }
                    @media (min-width: 720px){
-                    right: 20%;
+                    right: 1%;
                   } 
                   @media (min-width: 820px){
-                    right: 30%;
+                    right: 1%;
                   } 
                   @media (min-width: 920px){
-                    right: 40%;
+                    right: 1%;
                   } 
                  a{
                   margin-bottom: 2rem;
@@ -129,7 +136,7 @@ const Header = () => {
           css={css`
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1rem;
           `}
         >
           {usuario ? (
@@ -137,6 +144,7 @@ const Header = () => {
               <p
                 css={css`
                   margin-right: 2rem;
+                  font-size: 2.3rem;
                 `}
               >
                 Hola: {usuario.displayName}
@@ -156,8 +164,9 @@ const Header = () => {
             </>
           )}
         </div>
+        
       </ContenedorHeader>
-    </header>
+      </header>
   );
 };
 

@@ -15,7 +15,7 @@ const Nav = styled.nav `
   }
 
   a{
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-left: 2rem;
     color: var(--gris2);
     font-family:'PT Sans', sans-serif;

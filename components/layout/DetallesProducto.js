@@ -44,7 +44,7 @@ const Comentarios = styled.div`
     margin-right: 2rem;
   }
   p {
-    font-size: 1.6rem;
+    font-size: 2rem;
     margin-right: 1rem;
     font-weight: 700;
     &:last-of-type {
@@ -68,7 +68,7 @@ const Votos = styled.div`
 `;
 
 const Titulo = styled.a`
- font-size: 2rem;
+ font-size: 2.5rem;
  font-weight: bold;
  :hover{
     cursor:pointer;
@@ -76,7 +76,7 @@ const Titulo = styled.a`
 
 `;
 const TextoDescripcion = styled.p`
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   margin: 0;
   color: #888;
 `;
@@ -103,7 +103,7 @@ const DetallesProducto = ({ producto }) => {
         <Link href='/productos/[id]' as={`/productos/${id}`}>
           <Titulo>{nombre}</Titulo>
         </Link>
-          <p>{descripcion}</p>
+          <TextoDescripcion>{descripcion}</TextoDescripcion>
           <div>
             <Comentarios>
               <img src="/static/img/comentario.png" alt="logo" />

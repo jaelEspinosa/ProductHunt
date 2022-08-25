@@ -6,7 +6,8 @@ import {css } from '@emotion/react';
 const InputText = styled.input`
   border: 1px solid var(--gris3);
   padding: 1rem;
-  min-width: 100px;
+  min-width: 300px;
+  font-size: 2.2rem;
 `;
 
 const InputSubmit = styled.button`
