@@ -18,13 +18,14 @@ import Comentario from "../../components/layout/Comentario";
 
 // styled components
 
-
+//******************************************/
 const ContenedorProducto = styled.div`
-  @media (min-width: 768px) {
+ 
+  /* @media (min-width: 768px) {
     display: grid;
     grid-template-columns: 2fr 1fr;
     column-gap: 2rem;
-  }
+  } */
 `;
 
 
@@ -188,8 +189,8 @@ const Producto = () => {
             bottom: 0;
             margin: auto;
             border: 1px solid lightgray;
-            width: 450px;
-            height: 250px;
+            width: 500px;
+            height: 350px;
             text-align: center;
             padding: 2rem;
             background-color: white;
@@ -207,8 +208,8 @@ const Producto = () => {
                 box-shadow: 5px 5px 7px transparent;
               }
               100% {
-                width: 290px;
-                height: 150px;
+                width: 500px;
+                height: 350px;
                 background-color: white;
                 color: gray;
                 box-shadow: 5px 5px 7px lightgray;
@@ -216,12 +217,14 @@ const Producto = () => {
             }
           `}
         >
-          <h2>Añade Comentario</h2>
+          <h1>Escribe tu Comentario</h1>
           <textarea
             css={css`
+              padding: 15px;
               font-size: 2rem;
-              width: 350px;
-              height: 100px;
+              width: 450px;
+              height: 170px;
+              font-size: 2.8rem;
             `}
             value={comentario.mensaje}
             onChange={handleChange}
@@ -233,9 +236,10 @@ const Producto = () => {
               align-items: center;
               justify-content: space-around;
               button {
+                padding: 5px 10px;
                 margin-top: 25px;
                 background-color: white;
-                font-size: 2rem;
+                font-size: 2.8rem;
               }
             `}
           >
@@ -245,7 +249,7 @@ const Producto = () => {
                 agregarComentario()
               }}
             >
-              Crear Comentario
+              Publicar
             </button>
             <button onClick={() => setMostrarModalComentario(false)}>
               Cancelar
@@ -253,6 +257,19 @@ const Producto = () => {
           </div>
         </div>
                 )} 
+            <div css={css`
+             flex-direction: column;
+               @media(min-width: 768px){
+               display: flex;
+               flex-direction: row;
+               align-items: center;
+               justify-content: space-around;
+               gap: 2rem;
+               }
+            `}>
+              <div css={css`
+             
+              `}>
               {creado && (
                 <p css ={css`
                 font-size: 2.2rem;
@@ -266,21 +283,47 @@ const Producto = () => {
               <img
                 css={css`
                   width: 450px;
+                  min-width: 450px;
                 `}
                 src={URLImage}
                 alt={`imagen ${nombre}`}
               />
+              </div>  
+              <div css = {css`
+               display: flex;
+               flex-direction: column;
+               justify-content: space-evenly;
+              `}>
               <p
                css={css`
                font-size: 2.4rem;
                color: var(--gris2);
                `}
-              >{descripcion}</p>
+              >Descripción: {descripcion}</p>
+              <p css = {css`
+                 color:var(--gris2);
+                 font-size: 2rem;
+                 /* @media(min-width:768px){
+                  display: none;
+                 } */
+              
+              `}>Recomendaciones: {votos}{' '}👍</p> 
+              </div>           
+              </div>
               </div>
               {usuario && (
-              <div>
+              <div
+                css={css`
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-around;
+                  gap:10rem
+             
+                `}
+              >
                   <h3 css = {css`
-                  display: block;
+                  font-size: 2.5rem;
+                  width: 25rem;
                   text-align: center;
                   border-radius: 8px;
                   background-color: var(--gris3);
@@ -290,7 +333,12 @@ const Producto = () => {
                       }
                     `}
                     onClick={()=>setMostrarModalComentario(true)}
-                    >-Pulsa para añadir tu comentario-</h3>
+                    ><span
+                     css ={css`
+                       font-size: 2.5rem;
+                       font-weight: bolder;
+                     `}
+                    >+</span>{' '} Nuevo Comentario</h3>
           
                   {/* <form onSubmit={agregarComentario}>
                     <Campo>
@@ -302,6 +350,22 @@ const Producto = () => {
                     </Campo>
                     <Inputsubmit type="submit" value="Agrega tu comentario" />
                   </form> */}
+                  {usuario && <h3
+                  css = {css`
+                  font-size: 2.5rem;
+                  width: 25rem;
+                  text-align: center;
+                  border-radius: 8px;
+                  background-color: var(--gris3);
+                      :hover{
+                       cursor: pointer;
+                       
+                      }
+                /*   @media(min-width:768px){
+                    display:none;
+                  }  */   
+                    `}
+                   onClick={votarProducto}>Votar</h3>}
                 </div>
               )}
               <h2
@@ -334,7 +398,7 @@ const Producto = () => {
                 </ul>
               )}
             </div>
-            <aside>
+            {/* <aside>
               <Boton target="_blank" bgColor="true" href={url}>
                 Visitar URL
               </Boton>
@@ -345,9 +409,24 @@ const Producto = () => {
                 `}
               >
                 <p>{votos} Votos</p>
-                {usuario && <Boton onClick={votarProducto}>Votar</Boton>}
+                <p 
+                css={css`
+
+                   font-size: 5rem;
+                   @media(max-width:768px){
+                    display: none;
+                   }
+                   `}
+                >{votos} 👍</p>
+                {usuario && <Boton 
+                   css={css`
+                   @media(max-width:768px){
+                    display: none;
+                   }
+                   `}
+                onClick={votarProducto}>Votar</Boton>}
               </div>
-            </aside>
+            </aside> */}
           </ContenedorProducto>
         </div>
       )}

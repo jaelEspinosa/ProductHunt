@@ -2,14 +2,17 @@ import App from 'next/app'
 import { useState } from 'react';
 import firebase, {FirebaseContext} from '../firebase'
 import useAutenticacion from '../hooks/useAutenticacion';
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { Router, useRouter } from 'next/router';
 
 const MyApp = props =>{
     const usuario = useAutenticacion();
     const [producto, setProducto] = useState({});
     const [error, setError] = useState(false);
     const [cargando, setCargando] = useState(false);
-    
+    const router = useRouter()
+    const [productos, setProductos] = useState([]);
+    const [cargarState, setCargarState] = useState(false)
 
     const {
         nombre,
@@ -73,6 +76,20 @@ const MyApp = props =>{
         }
         console.log('vamos a añadir el comentario...')
       }
+      const eliminarPublicacion = async (id)=>{
+    
+        if(!usuario){
+         return router.push('/login')
+        }
+        // borramos de la DB
+       await deleteDoc(doc(firebase.db, 'productos', id))
+       
+       // actualizo el state
+   
+       const nuevosProductos = productos.map( productoState=>productoState.id!==producto.id )
+       setProductos(nuevosProductos)
+       setCargarState(true)
+     }
    
     const {Component, pageProps} = props;
   
@@ -89,7 +106,12 @@ const MyApp = props =>{
             setCargando,            
             eliminarComentario,
             editarComentario,
-            agregarComentario
+            agregarComentario,
+            eliminarPublicacion,
+            productos,
+            setProductos,
+            cargarState,
+            setCargarState
             
         }}
  >

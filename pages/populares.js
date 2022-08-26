@@ -8,9 +8,9 @@ import Spinner from '../components/layout/Spinner';
 
 
 export default function Populares() {
-  const [productos, setProductos] = useState([]);
   const [cargando, setCargando]= useState(false)
-  const { firebase } = useContext(FirebaseContext);
+  const { firebase, productos, setProductos, cargarState,setCargarState } = useContext(FirebaseContext);
+ 
  
   let orderedArray= []
   useEffect(()=>{
@@ -38,11 +38,11 @@ export default function Populares() {
    })    
       setProductos(orderedArray)
       setCargando(false)
-   
+      setCargarState(false)
   };
     obtenerProductos()
     
-  },[])
+  },[cargarState])
 
 
  

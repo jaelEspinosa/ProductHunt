@@ -8,11 +8,12 @@ import Spinner from '../components/layout/Spinner';
 
 
 export default function Home() {
-  const [productos, setProductos] = useState([]);
+  /* const [productos, setProductos] = useState([]); */
   const [cargando, setCargando]= useState(false)
-  const { firebase } = useContext(FirebaseContext);
+  const { firebase, productos, setProductos, cargarState,setCargarState } = useContext(FirebaseContext);
  
   let orderedArray= []
+  
   useEffect(()=>{
    const obtenerProductos =async ()=>{
     setCargando(true)
@@ -38,11 +39,11 @@ export default function Home() {
    })    
       setProductos(orderedArray)
       setCargando(false)
-   
+      setCargarState(false)
   };
     obtenerProductos()
     
-  },[])
+  },[cargarState])
 
 
  
@@ -58,7 +59,7 @@ export default function Home() {
           <div className='contenedor'>
            <ul className='bg-white'>
 
-           {productos.map (producto =>(
+           {productos.map ((producto, i) =>(
              <DetallesProducto key={producto.id} producto = {producto}/>
            ))}
 

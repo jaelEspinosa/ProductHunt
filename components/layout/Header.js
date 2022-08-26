@@ -100,7 +100,10 @@ const Header = () => {
                     right: 1%;
                   } 
                  a{
+                  text-align: center;
+                  color:var(--gris2);
                   margin-bottom: 2rem;
+                  font-weight:bold;
                  }
                  div{
                   margin-bottom: 2rem;

@@ -11,8 +11,8 @@ import Boton from "../ui/Boton";
 //Styled componets
 const MenuComentarios = styled.div`
   
-  height: 13.5rem;
-  width: 14.5rem;
+  height: 16rem;
+  width: 20rem;
   border: 1px solid gray;
   background-color: white;
   padding: 1rem;
@@ -23,7 +23,7 @@ const MenuComentarios = styled.div`
   margin: 0.2rem;
   display: flex;
   flex-direction: column;
-  font-size: 1.7rem;
+  font-size: 2.3rem;
   text-transform: uppercase;
   animation-name: menuMostrar;
   animation-duration: 0.2s;
@@ -108,64 +108,7 @@ const Comentario = ({ comentario, id }) => {
       {mostrarModal && (
         <div
           css={css`
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            margin: auto;
-            border: 1px solid lightgray;
-            width: 290px;
-            height: 150px;
-            text-align: center;
-            padding: 2rem;
-            background-color: white;
-            box-shadow: 5px 5px 7px gray;
-            animation-name: mostrarModal;
-            animation-duration: 0.3s;
-            animation-timing-function: ease-in-out;
-
-            @keyframes mostrarModal {
-              0% {
-                width: 0;
-                height: 0;
-                background-color: transparent;
-                color: transparent;
-                box-shadow: 5px 5px 7px transparent;
-              }
-              100% {
-                width: 290px;
-                height: 150px;
-                background-color: white;
-                color: gray;
-                box-shadow: 5px 5px 7px lightgray;
-              }
-            }
-          `}
-        >
-          <p>Esto borrará el comentario</p>
-          <div
-            css={css`
-              display: flex;
-              align-items: center;
-              justify-content: space-around;
-            `}
-          >
-            <Boton
-              onClick={() => {
-                setMostrarModal(false);
-                eliminarComentario(comentario.creado, id);
-              }}
-            >
-              Confirmar
-            </Boton>
-            <Boton onClick={() => setMostrarModal(false)}>Cancelar</Boton>
-          </div>
-        </div>
-      )}
-      {mostrarModalEdComentarios && (
-        <div
-          css={css`
+            z-index: 1;
             position: absolute;
             top: 0;
             left: 0;
@@ -176,6 +119,7 @@ const Comentario = ({ comentario, id }) => {
             width: 450px;
             height: 250px;
             text-align: center;
+            font-size: 3rem;
             padding: 2rem;
             background-color: white;
             box-shadow: 5px 5px 7px gray;
@@ -192,8 +136,73 @@ const Comentario = ({ comentario, id }) => {
                 box-shadow: 5px 5px 7px transparent;
               }
               100% {
-                width: 290px;
-                height: 150px;
+                width: 450px;
+                height: 250px;
+                background-color: white;
+                color: gray;
+                box-shadow: 5px 5px 7px lightgray;
+              }
+            }
+          `}
+        >
+          <p>¡Esto borrará el comentario!</p>
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+              button {
+                padding: 5px 10px;
+                margin-top: 25px;
+                background-color: white;
+                font-size: 3rem;
+              }
+            `}
+          >
+            <button
+              onClick={() => {
+                setMostrarModal(false);
+                eliminarComentario(comentario.creado, id);
+              }}
+            >
+              Confirmar
+            </button>
+            <button onClick={() => setMostrarModal(false)}>Cancelar</button>
+          </div>
+        </div>
+      )}
+      {mostrarModalEdComentarios && (
+        <div
+          css={css`
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 1px solid lightgray;
+            width: 500px;
+            height: 300px;
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 5px 5px 7px gray;
+            animation-name: mostrarModal;
+            animation-duration: 0.1s;
+            animation-timing-function: ease-in-out;
+
+            @keyframes mostrarModal {
+              0% {
+                width: 0;
+                height: 0;
+                background-color: transparent;
+                color: transparent;
+                box-shadow: 5px 5px 7px transparent;
+              }
+              100% {
+                width: 500px;
+                height: 300px;
                 background-color: white;
                 color: gray;
                 box-shadow: 5px 5px 7px lightgray;
@@ -204,9 +213,12 @@ const Comentario = ({ comentario, id }) => {
           <h2>Editar Comentario</h2>
           <textarea
             css={css`
-              font-size: 2rem;
-              width: 350px;
-              height: 100px;
+              padding: 5px;
+              font-size: 2.3rem;
+              width: 450px;
+              height: 140px;
+              resize: none;
+              
             `}
             value={nuevoComentario}
             onChange={handlehange}
@@ -217,9 +229,10 @@ const Comentario = ({ comentario, id }) => {
               align-items: center;
               justify-content: space-around;
               button {
+                padding: 5px 5px;
                 margin-top: 25px;
                 background-color: white;
-                font-size: 2rem;
+                font-size: 2.3rem;
               }
             `}
           >
