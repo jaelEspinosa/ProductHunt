@@ -25,5 +25,29 @@ const Boton = styled.a`
   }
 `;
 
+export const BotonMini = styled.a`
+display: inline-block;
+font-weight: 700;
+text-transform: uppercase;
+border: 1px solid #d1d1d1;
+padding: 0.8rem 2rem;
+margin-right: 1rem;
+margin: 2rem auto;
+text-align: center;
+background-color: ${props => props.bgColor ? '#DA552f' : 'white'};
+color: ${props => props.bgColor ? 'white' : '#000'};
+font-size: 1.5rem;
+@media (min-width: 768px){
+  font-size: 1.2rem;
+}
+&:hover{
+  cursor: pointer;
+}
+&:last-of-type{
+  margin-right: 0;
+
+}
+`;
+
 
 export default Boton

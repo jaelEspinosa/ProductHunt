@@ -20,7 +20,12 @@ import useValidacion from "../hooks/useValidacion";
 import validarCrearProducto from "../validacion/validarCrearProducto";
 import { addDoc, collection } from "firebase/firestore";
 import Error404 from "../components/layout/404";
+import styled from "@emotion/styled";
 
+const ImagenMiniatura = styled.img`
+  max-width: 150px;
+  margin-left: 25px;
+`;
 const STATE_INICIAL = {
   nombre: "",
   empresa: "",
@@ -119,7 +124,7 @@ const NuevoProducto = () => {
         () => {
             setUploading(false);
             getDownloadURL(uploadTask.snapshot.ref).then(url => {
-                console.log('Imagen disponible en:', url);
+                
                 setURLImage(url);
             });
         }
@@ -177,7 +182,7 @@ const NuevoProducto = () => {
             </Campo>
             {errores?.empresa && <Error>{errores.empresa}</Error>}
             <Campo>
-              <label htmlFor="imagen">Nombre Imagen</label>
+              <label htmlFor="imagen">Imagen: </label>
 
             {!progreso ? (
               <input
@@ -191,15 +196,16 @@ const NuevoProducto = () => {
               />
             ): progreso < 100 ? (<Progress1>Subiendo....{progreso} %</Progress1>):
             (
-              <Progress>terminado {progreso} %</Progress>  
+              <Progress>Terminado {progreso}..%</Progress>  
+                
             )}  
-
+            {URLImage.length > 0 && <ImagenMiniatura src={URLImage}/>}
             </Campo>
             {errores?.url && <Error>{errores.url}</Error>}
             <Campo>
               <label htmlFor="url">Url</label>
 
-              <input
+             { <input
                 type="url"
                 id="url"
                 placeholder="URL del producto"
@@ -207,7 +213,8 @@ const NuevoProducto = () => {
                 value={url}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
-              />
+              />}
+            
             </Campo>
             {errores?.url && <Error>{errores.url}</Error>}
           </fieldset>

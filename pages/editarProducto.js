@@ -5,20 +5,29 @@ import Layout from "../components/layout/Layout";
 import { FirebaseContext } from "../firebase";
 
 
+const ImagenMiniatura = styled.img`
+  max-width: 200px;
+`;
+
 import {
   Campo,
   Error,
   Exito,
   Formulario,
   Inputsubmit,
+  Progress,
+  Progress1,
 
 } from "../components/ui/Formulario";
 
-// validaciones
-import useValidacion from "../hooks/useValidacion";
-import validarCrearProducto from "../validacion/validarCrearProducto";
-import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+
+
+import {  doc, getDoc, updateDoc} from "firebase/firestore";
+import { ref, getDownloadURL, uploadBytesResumable } from "@firebase/storage";
 import Error404 from "../components/layout/404";
+import styled from "@emotion/styled";
+import Spinner from "../components/layout/Spinner";
+import { BotonMini } from "../components/ui/Boton";
 
 const STATE_INICIAL = {
   nombre: "",
@@ -33,33 +42,75 @@ const EditarProducto = () => {
 // States para la subida de la imagen
 const [uploading, setUploading] = useState(false);
 const [productoEditar, setProductoEditar] = useState({})
-const [errores, setErrores]=useState(false)
 
+const [cambiarImagen, setCambiarImagen] = useState(false)
+const [URLImage, setURLImage] = useState("");
+const [progreso, setProgreso] = useState(null)
 // hook de routing para redireccionar y obtener query
 const router = useRouter();
 const {query:{q}}=router;
 
+
+
+const [errores, setErrores]=useState({})
 
 //obtener el producto a editar 
     useEffect(()=>{
        
        const obtenerProducto = async ()=>{
         if(!productoEditar.nombre){
-            const docRef = doc (firebase.db, 'productos', q)
-            const docSnap = await getDoc(docRef)
-            setProductoEditar(docSnap.data())
+            try {
+                const docRef = doc(firebase.db, 'productos', q)
+                const docSnap = await getDoc(docRef)
+                setProductoEditar(docSnap.data()) 
+            } catch (error) {
+                console.error(error)
+            }
+           
         }
            return
        }
 
 
      obtenerProducto()
-     console.log('el producto a editar es',productoEditar)
+    
     },[q, productoEditar])
   
 const handleSubmit = e =>{
     e.preventDefault()
-    console.log('vamos a actualizar el registro')
+    setErrores({})
+  //validar formulario
+  console.log(productoEditar)
+  if (productoEditar.nombre.trim() === '' || productoEditar.nombre.length < 3){
+    setErrores({
+        ...errores,
+        nombre : 'El nombre es obligatorio'
+    })
+    return
+  }
+  if (productoEditar.empresa.trim() === '' || productoEditar.empresa.length < 3){
+    setErrores({
+        ...errores,
+        empresa : 'El nombre de la empresa es obligatorio'
+    })
+    return
+  }
+  if (!/^(ftp|http|https):\/\/[^ "]+$/.test(productoEditar.url)){
+    setErrores({
+        ...errores,
+        url : 'URL no válida'
+    })
+    return
+  }
+  if (productoEditar.descripcion.trim() === '' || productoEditar.descripcion.length < 10){
+    setErrores({
+        ...errores,
+        empresa : 'El nombre de la empresa es obligatorio'
+    })
+    return
+}
+  console.log('Estos son los errores',errores)
+  
     actualizarProducto()
 }  
 
@@ -108,6 +159,43 @@ const handleKeyDown = e=>{
       console.log(error);
     }
   };
+
+  const handleImageUpload = e => {
+    setCambiarImagen(false)
+    // Se obtiene referencia de la ubicación donde se guardará la imagen
+    const file = e.target.files[0];
+    const imageRef = ref(firebase.storage, 'products/' + file.name);
+
+    // Se inicia la subida
+    setUploading(true);
+    const uploadTask = uploadBytesResumable(imageRef, file);
+
+    // Registra eventos para cuando detecte un cambio en el estado de la subida
+    uploadTask.on('state_changed', 
+        // Muestra progreso de la subida
+        snapshot => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Subiendo imagen: ${progress}% terminado`);
+            setProgreso(progress)
+        },
+        // En caso de error
+        error => {
+            setUploading(false);
+            
+        },
+        // Subida finalizada correctamente
+        () => {
+            setUploading(false);
+            getDownloadURL(uploadTask.snapshot.ref).then(url => {
+                
+                setProductoEditar({
+                    ...productoEditar,
+                    URLImage :url
+                })
+            });
+        }
+    );
+};
 
   return (
     <div>
@@ -162,13 +250,24 @@ const handleKeyDown = e=>{
             <Campo>
               <label htmlFor="imagen">Imagen</label>
 
-             <img src={productoEditar.URLImage} alt={`imagen de ${productoEditar.nombre}`}/>
+             {!productoEditar.URLImage ? <Spinner></Spinner>:<ImagenMiniatura src={productoEditar.URLImage} alt={`imagen de ${productoEditar.nombre}`}/>}
              
 
-       
+             {uploading && (progreso < 100 ? <Progress1>subiendo....{progreso}..%</Progress1>:
+             progreso > 10 ? <Progress>Terminado {progreso}..%</Progress> : null
+             )}
             </Campo>
-            {productoEditar.URLImage && <p css = {css`text-align:center; color:red;`}>Imagen No Editable</p>}
+            <BotonMini onClick={()=>setCambiarImagen(true)}>Cambiar Imagen</BotonMini>
+            {cambiarImagen && <input
+                                  css={css`
+                                  margin-left: 2rem;
+                                  `}
+                                  accept="image/*" 
+                                  type='file' 
+                                  value={URLImage} 
+                                  onChange={handleImageUpload}/>}
             {errores?.url && <Error>{errores.url}</Error>}
+            
             <Campo>
               <label htmlFor="url">Url</label>
 

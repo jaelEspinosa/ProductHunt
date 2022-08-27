@@ -29,7 +29,7 @@ const EliminarPubli = styled.div`
 position: absolute;
 top: 20px;
 right: 20px;
-font: 3rem;
+
 :hover{
   cursor: pointer;
 }
@@ -46,19 +46,22 @@ position: absolute;
 top: 20px;
 right: 20px;
 width: 200px;
-height: 150px;
+height: 180px;
 border: 1px solid var(--gris2);
 animation-name: mostrar;
-animation-duration: 0.5s;
+animation-duration: .5s;
 animation-timing-function: ease-in-out;
+font-size: 2.2rem;
 
 @keyframes mostrar {
   0%{
+    border: 1px solid transparent;
     background-color: transparent;
     color: transparent;
  
   }
   100%{
+    border: 1px solid var(--gris2);
     background-color: white;
     color: black;
 
@@ -225,7 +228,7 @@ const DetallesProducto = ({ producto }) => {
          >📝 Editar </p>     
         <p onClick={()=>{setMostrarModalEliminarPubli(true)
                          setMostrarMenuPubli(false)}
-         }>🆑 Eliminar Publicación</p>
+         }>🆑 Eliminar</p>
         <p onClick={()=>setMostrarMenuPubli(false)}>❌ Cancelar</p>
       </MenuEliminarPubli>}
       {mostrarModalEliminarPubli && <ModalEliminarPubli>

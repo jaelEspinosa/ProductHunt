@@ -340,16 +340,7 @@ const Producto = () => {
                      `}
                     >+</span>{' '} Nuevo Comentario</h3>
           
-                  {/* <form onSubmit={agregarComentario}>
-                    <Campo>
-                      <input
-                        onChange={comentarioChange}
-                        type="text"
-                        name="mensaje"
-                      />
-                    </Campo>
-                    <Inputsubmit type="submit" value="Agrega tu comentario" />
-                  </form> */}
+                  
                   {usuario && <h3
                   css = {css`
                   font-size: 2.5rem;
@@ -361,13 +352,12 @@ const Producto = () => {
                        cursor: pointer;
                        
                       }
-                /*   @media(min-width:768px){
-                    display:none;
-                  }  */   
+             
                     `}
                    onClick={votarProducto}>Votar</h3>}
                 </div>
               )}
+              
               <h2
                 css={css`
                   margin: 2rem 0;
@@ -398,35 +388,10 @@ const Producto = () => {
                 </ul>
               )}
             </div>
-            {/* <aside>
-              <Boton target="_blank" bgColor="true" href={url}>
+            <Boton target="_blank" bgColor="true" href={url}>
                 Visitar URL
               </Boton>
-
-              <div
-                css={css`
-                  margin-top: 5rem;
-                `}
-              >
-                <p>{votos} Votos</p>
-                <p 
-                css={css`
-
-                   font-size: 5rem;
-                   @media(max-width:768px){
-                    display: none;
-                   }
-                   `}
-                >{votos} 👍</p>
-                {usuario && <Boton 
-                   css={css`
-                   @media(max-width:768px){
-                    display: none;
-                   }
-                   `}
-                onClick={votarProducto}>Votar</Boton>}
-              </div>
-            </aside> */}
+            
           </ContenedorProducto>
         </div>
       )}
