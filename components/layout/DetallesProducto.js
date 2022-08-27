@@ -5,8 +5,9 @@ import { es } from "date-fns/locale";
 import Link from "next/link";
 import { FirebaseContext } from "../../firebase";
 import { css } from "@emotion/react";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { deleteDoc, doc } from "firebase/firestore";
+
 
 
 
@@ -32,7 +33,46 @@ font: 3rem;
 :hover{
   cursor: pointer;
 }
+img{
+  width: 25px;
+}
 `
+const MenuEliminarPubli = styled.div`
+z-index: 1;
+padding: 5px 15px;
+border-radius: 5px;
+background-color: white;
+position: absolute;
+top: 20px;
+right: 20px;
+width: 200px;
+height: 150px;
+border: 1px solid var(--gris2);
+animation-name: mostrar;
+animation-duration: 0.5s;
+animation-timing-function: ease-in-out;
+
+@keyframes mostrar {
+  0%{
+    background-color: transparent;
+    color: transparent;
+ 
+  }
+  100%{
+    background-color: white;
+    color: black;
+
+  }
+  
+}
+p{
+  :hover{
+  cursor: pointer;
+}
+}
+
+`
+
 const DescripcionProducto = styled.div`
   flex: 0 1 1000px;
   display: flex;
@@ -99,6 +139,7 @@ const TextoDescripcion = styled.p`
 `;
 
 const ModalEliminarPubli = styled.div`
+  z-index: 1;
   text-align: center;
   background-color: white;
   width: 460px;
@@ -157,13 +198,36 @@ const DetallesProducto = ({ producto }) => {
     creador
   } = producto;
   const {usuario, eliminarPublicacion} = useContext(FirebaseContext)
+  const [mostrarMenuPubli, setMostrarMenuPubli] = useState (false)
   const [mostrarModalEliminarPubli, setMostrarModalEliminarPubli] = useState(false)
+  
   const router = useRouter()
-
+  const editarProducto = ()=>{
+    console.log('producto es...', producto)
+    Router.push({
+      pathname:'/editarProducto',
+      query:{ 
+        q:producto.id
+      }
+      
+    })
+  }
 
   return (
     <Producto>
-      {creador?.id === usuario?.uid && <EliminarPubli onClick={()=>setMostrarModalEliminarPubli(true)}>Eliminar</EliminarPubli>}
+      {creador?.id === usuario?.uid && <EliminarPubli onClick={()=>setMostrarMenuPubli(true)}><img src='/static/img/menuPuntos.png' alt='menu'></img></EliminarPubli>}
+   
+      {mostrarMenuPubli && <MenuEliminarPubli>
+         <p onClick={()=>{
+            setMostrarMenuPubli(false)
+            editarProducto()
+         }}          
+         >📝 Editar </p>     
+        <p onClick={()=>{setMostrarModalEliminarPubli(true)
+                         setMostrarMenuPubli(false)}
+         }>🆑 Eliminar Publicación</p>
+        <p onClick={()=>setMostrarMenuPubli(false)}>❌ Cancelar</p>
+      </MenuEliminarPubli>}
       {mostrarModalEliminarPubli && <ModalEliminarPubli>
 
          <h2>Esto eliminará la publicación</h2>
