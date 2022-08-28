@@ -156,7 +156,7 @@ const ModalEliminarPubli = styled.div`
   right: 0;
   bottom: 0;
   margin: auto;
-  animation-name: mostrar;
+  animation-name: mostrarModal;
   animation-duration: 0.1s;
   animation-timing-function: ease-in-out;
   display: flex;
@@ -171,7 +171,7 @@ const ModalEliminarPubli = styled.div`
     font-size: 2.5rem;
     background-color: white;
    }
-  @keyframes mostrar {
+  @keyframes mostrarModal {
     0%{
       background-color: transparent;
       color: transparent;
