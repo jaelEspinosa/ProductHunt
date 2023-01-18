@@ -7,6 +7,7 @@ import Spinner from "../components/layout/Spinner";
 import Link from "next/link";
 import styled from "@emotion/styled";
 import useAutenticacion from "../hooks/useAutenticacion";
+import Router from "next/router";
 
 
 const Enlaces = styled.a`
@@ -45,6 +46,7 @@ export default function Home() {
 
       if (usuario?.displayName) {
         setIsLogged(true);
+        
       }
       try {
         const querySnapShot = await getDocs(
@@ -70,7 +72,9 @@ export default function Home() {
       } catch (error) {
         console.log(error);
         setIsLogged(false);
+        Router.push('/login')
       }
+
 
       setProductos(orderedArray);
       setCargando(false);
@@ -84,22 +88,7 @@ export default function Home() {
       <Layout>
         {cargando ? (
           <Spinner />
-        ) : !isLogged ? (
-          <div style={{ height:'75vh', display:'flex', flexDirection:'column',gap:'50px', alignItems:'center', justifyContent:'center'}}>
-            <h1 style={{textAlign:'center', color:'gray'}}>Logeate o Crea una Cuenta</h1>
-            <p style={{fontSize:'16px', color:'gray'}} >Para poder ver los contenidos deberás estar logeado</p>
-            <p style={{fontSize:'16px', color:'gray'}} >Una nueva cuenta se crea en 10 segundos.</p>
-           <div style={{ marginTop:'1px' ,display:'flex', flexdirection:'row', alingItems:'center', justifyContent:'center', gap:'25px'}}>
-           <Link href={'/login'}>
-              <Enlaces style={{fontSize:'32px',color:'gray', textTransform:'capitalize' }}>Login</Enlaces>
-            </Link>
-            <Link href={'/crearCuenta'}>
-              <Enlaces className="enlaces">Nueva Cuenta</Enlaces>
-            </Link>
-           </div>
-            
-          </div>
-        ) : (
+        ) :  (
           <div className="listado-productos">
             <div className="contenedor">
               <ul className="bg-white">

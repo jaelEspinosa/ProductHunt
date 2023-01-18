@@ -46,11 +46,11 @@ const Navegacion = () => {
   return (
     <>
     
-    <Nav>
+    {usuario?.displayName && <Nav>
         <Link href= '/'>Inicio</Link>
         <Link href= '/populares'>Populares</Link>
-      {usuario?.displayName && <Link href= '/nuevoProducto'>Nuevo Producto</Link>}  
-    </Nav>
+       <Link href= '/nuevoProducto'>Nuevo Producto</Link> 
+    </Nav>} 
     
          
     </>

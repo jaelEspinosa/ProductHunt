@@ -6,11 +6,22 @@ import { FirebaseContext } from '../firebase';
 import DetallesProducto from '../components/layout/DetallesProducto';
 import Spinner from '../components/layout/Spinner';
 
+import  Router  from 'next/router';
+
 
 export default function Populares() {
   const [cargando, setCargando]= useState(false)
-  const { firebase, productos, setProductos, cargarState,setCargarState } = useContext(FirebaseContext);
- 
+  const { firebase, productos, setProductos, cargarState,setCargarState, usuario } = useContext(FirebaseContext);
+  
+
+  useEffect(() => {
+    if (!usuario){
+      Router.push('/login')
+    }
+  
+    
+  }, [usuario])
+  
  
   let orderedArray= []
   useEffect(()=>{

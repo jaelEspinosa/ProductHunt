@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from '@emotion/styled';
 import {css } from '@emotion/react';
 import  Router  from 'next/router';
+import FirebaseContext from '../../firebase/contex';
 
 
 const InputText = styled.input`
@@ -38,7 +39,7 @@ const InputSubmit = styled.button`
 
 const Buscar = () => {
   const [busqueda, setBusqueda] = useState('')
-
+  const { usuario } = useContext(FirebaseContext)
   const buscarProducto = e =>{
     e.preventDefault()
     if(busqueda.trim() === '')return;
@@ -55,15 +56,18 @@ const Buscar = () => {
     <form css = {css ` 
           position: relative;
     `}
-    onSubmit={buscarProducto}
+    onSubmit={ buscarProducto }
     >
 
         <InputText
+        disabled= { !usuario }
         placeholder='Buscar Productos'
         onChange={e => setBusqueda(e.target.value)}
          type='text'/>
 
-        <InputSubmit type='submit'></InputSubmit>
+        {usuario && <InputSubmit  
+       
+         type='submit'></InputSubmit>}
     </form>
   )
 }
