@@ -6,6 +6,7 @@ import DetallesProducto from "../components/layout/DetallesProducto";
 import Spinner from "../components/layout/Spinner";
 import Link from "next/link";
 import styled from "@emotion/styled";
+import useAutenticacion from "../hooks/useAutenticacion";
 
 
 const Enlaces = styled.a`
@@ -28,15 +29,20 @@ export default function Home() {
   const [cargando, setCargando] = useState(false);
   const { firebase, productos, setProductos, cargarState, setCargarState } =
     useContext(FirebaseContext);
-  const { usuario } = useContext(FirebaseContext);
+
+  const  usuario  = useAutenticacion();
+
   console.log("usuario desde index: ", usuario?.displayName);
+
   const [isLogged, setIsLogged] = useState(false);
 
   let orderedArray = [];
 
   useEffect(() => {
     const obtenerProductos = async () => {
+
       setCargando(true);
+
       if (usuario?.displayName) {
         setIsLogged(true);
       }
@@ -71,7 +77,7 @@ export default function Home() {
       setCargarState(false);
     };
     obtenerProductos();
-  }, [cargarState]);
+  }, [cargarState, usuario]);
 
   return (
     <div>
